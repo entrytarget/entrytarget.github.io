@@ -1,4 +1,4 @@
-# A Boring Ledger — Integration Guide
+# EntryTarget — Integration Guide
 
 A double-entry financial ledger backend built in Rust. Delivered as a per-customer container image. Each customer runs their own segregated infrastructure (Fargate + RDS) in their own AWS account — either vendor-managed via CloudFormation or self-deployed.
 
@@ -6,8 +6,8 @@ A double-entry financial ledger backend built in Rust. Delivered as a per-custom
 - Stateless REST API — all calls are synchronous with the database
 - Row-level integrity via HMAC-SHA256 hashes
 - Configurable idempotency window with crash recovery
-- Console: https://console.aboringledger.com
-- Documentation: https://a-boring-ledger.gitbook.io/docs
+- Console: https://console.entrytarget.com
+- Documentation: https://entrytarget.gitbook.io/docs
 
 ## Authentication
 
@@ -27,27 +27,27 @@ A financial account with an asset (currency) and balance.
 - `category` — free-form label (e.g. `PAYMENT_ACCOUNT`, `PIX_ASSET`). Only `A-Z`, `0-9`, `_`, auto-uppercased
 - `asset` — currency code (e.g. `BRL`, `USD`). Only `A-Z`, `0-9`, `_`, auto-uppercased
 - `balance` — integer (bigint). Client controls decimal places
-- `version` — incremented on every balance change, used as journal cursor
+- `version` — incremented on every balance change, used as ledger cursor
 
-### Entry
+### Journal Entry
 
-A double-entry bookkeeping record: one debit and one credit. Each entry validates that both accounts share the same asset as the entry's declared asset.
+A double-entry bookkeeping record: one debit and one credit. Each journal entry validates that both accounts share the same asset as the journal entry's declared asset.
 
 ### Transaction
 
-A group of entries executed atomically. Identified by `transaction_id` (UUID v7). A transaction may contain entries in different currencies, as long as each entry's debit and credit accounts match the entry's declared asset.
+A group of journal entries executed atomically. Identified by `transaction_id` (UUID v7). A transaction may contain journal entries in different currencies, as long as each journal entry's debit and credit accounts match the journal entry's declared asset.
 
-### Journal
+### Ledger
 
 The account statement — every debit and credit line for an account, ordered by `account_version`.
 
-### Journal Archive
+### Ledger Archive
 
-Compressed journal records stored as JSONB arrays (up to 1000 lines each). Client-triggered via `POST /journal/archive` with a date cutoff. The system never archives automatically.
+Compressed ledger records stored as JSONB arrays (up to 1000 lines each). Client-triggered via `POST /ledger/archive` with a date cutoff. The system never archives automatically.
 
 ### Balance Policy
 
-Applied per account side (debit or credit) in each entry:
+Applied per account side (debit or credit) in each journal entry:
 
 - `ALWAYS_POSITIVE` — balance cannot go below 0 (e.g. customer payment accounts)
 - `ALWAYS_NEGATIVE` — balance cannot go above 0 (e.g. central bank mirror account)
@@ -107,7 +107,6 @@ curl http://<host>:8080/account/019681a2-... \
 
 ```json
 {
-  "id": "019681a2-...",
   "category": "PAYMENT_ACCOUNT",
   "asset": "BRL",
   "balance": 15000,
@@ -133,13 +132,13 @@ Returns balance summary grouped by category for a given asset.
 
 ---
 
-#### ➤ Get Account Journal
+#### ➤ Get Account Ledger
 
-- **Endpoint:** `GET /account/:id/journal`
+- **Endpoint:** `GET /account/:id/ledger`
 - **curl:**
 
 ```bash
-curl "http://<host>:8080/account/019681a2-.../journal?from=2026-01-01&to=2026-01-31&limit=50" \
+curl "http://<host>:8080/account/019681a2-.../ledger?from=2026-01-01&to=2026-01-31&limit=50" \
   -H "X-Api-Key: ak_..." \
   -H "X-Api-Secret: sk_..."
 ```
@@ -168,7 +167,7 @@ curl -X POST http://<host>:8080/transaction \
   -H "X-Api-Secret: sk_..." \
   -H "Idempotency-Key: my-unique-key-123" \
   -d '{
-    "entries": [
+    "journal_entries": [
       {
         "sequence": 1,
         "type": "PIX_OUT",
@@ -189,9 +188,9 @@ curl -X POST http://<host>:8080/transaction \
 
 **Parameters:**
 
-- **entries** (array, required): list of entries to execute atomically.
+- **journal_entries** (array, required): list of journal entries to execute atomically.
   - **sequence** (int, required): must start at 1 and increment without gaps.
-  - **type** (string, required): entry type label. Only `A-Z`, `0-9`, `_`. Auto-uppercased.
+  - **type** (string, required): journal entry type label. Only `A-Z`, `0-9`, `_`. Auto-uppercased.
   - **asset** (string, required): currency code. Must match both accounts' asset.
   - **amount** (int, required): must be greater than zero.
   - **debit.account_id** (uuid, required): account to debit.
@@ -204,22 +203,15 @@ curl -X POST http://<host>:8080/transaction \
 ```json
 {
   "transaction_id": "019681c4-...",
-  "entries": [
+  "journal_entries": [
     {
-      "id": "019681c5-...",
+      "entry_id": "019681c5-...",
       "sequence": 1,
-      "type": "PIX_OUT",
-      "asset": "BRL",
-      "amount": 1000,
       "debit": {
-        "account_id": "019681a2-...",
-        "category": "PAYMENT_ACCOUNT",
         "post_balance": 14000,
         "version": 43
       },
       "credit": {
-        "account_id": "019681b3-...",
-        "category": "PIX_ASSET",
         "post_balance": -1000,
         "version": 1
       }
@@ -241,17 +233,17 @@ curl http://<host>:8080/transaction/019681c4-... \
   -H "X-Api-Secret: sk_..."
 ```
 
-Returns all entries of a transaction.
+Returns all journal entries of a transaction as `{ "journal_entries": [...] }`.
 
 ---
 
-#### ➤ Get Entry
+#### ➤ Get Journal Entry
 
-- **Endpoint:** `GET /entry/:id`
+- **Endpoint:** `GET /journal/entry/:id`
 - **curl:**
 
 ```bash
-curl http://<host>:8080/entry/019681c5-... \
+curl http://<host>:8080/journal/entry/019681c5-... \
   -H "X-Api-Key: ak_..." \
   -H "X-Api-Secret: sk_..."
 ```
@@ -327,23 +319,23 @@ Validates all tables for tampering via HMAC row hashes and cross-references.
 ```json
 {
   "account": { "total": 1000, "valid": 1000, "invalid": 0, "violations": [] },
-  "entry": { "total": 5000, "valid": 5000, "invalid": 0, "violations": [] },
-  "journal": { "total": 10000, "valid": 10000, "invalid": 0, "violations": [] },
-  "journal_archive": { "total": 384, "valid": 384, "invalid": 0, "violations": [] }
+  "journal": { "total": 5000, "valid": 5000, "invalid": 0, "violations": [] },
+  "ledger": { "total": 10000, "valid": 10000, "invalid": 0, "violations": [] },
+  "ledger_archive": { "total": 384, "valid": 384, "invalid": 0, "violations": [] }
 }
 ```
 
 ---
 
-### Journal Archive
+### Ledger Archive
 
-#### ➤ Archive Journal
+#### ➤ Archive Ledger
 
-- **Endpoint:** `POST /journal/archive`
+- **Endpoint:** `POST /ledger/archive`
 - **curl:**
 
 ```bash
-curl -X POST http://<host>:8080/journal/archive \
+curl -X POST http://<host>:8080/ledger/archive \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: ak_..." \
   -H "X-Api-Secret: sk_..." \
@@ -354,7 +346,7 @@ curl -X POST http://<host>:8080/journal/archive \
 
 - **before** (string, required): date cutoff `YYYY-MM-DD`. Must not be current date or future.
 
-Archives all journal lines with `created_at < before` across all accounts. Runs full integrity validation before archiving — rejects if any violation is detected.
+Archives all ledger lines with `created_at < before` across all accounts. Runs full integrity validation before archiving — rejects if any violation is detected.
 
 **Response:**
 
@@ -371,13 +363,13 @@ Archives all journal lines with `created_at < before` across all accounts. Runs 
 
 ---
 
-#### ➤ Read Archived Journal
+#### ➤ Read Archived Ledger
 
-- **Endpoint:** `GET /account/:id/journal/archive`
+- **Endpoint:** `GET /account/:id/ledger/archive`
 - **curl:**
 
 ```bash
-curl "http://<host>:8080/account/019681a2-.../journal/archive?from=2025-12-01&to=2026-01-31&cursor=0" \
+curl "http://<host>:8080/account/019681a2-.../ledger/archive?from=2025-12-01&to=2026-01-31&cursor=0" \
   -H "X-Api-Key: ak_..." \
   -H "X-Api-Secret: sk_..."
 ```
@@ -491,7 +483,7 @@ curl http://<host>:8080/metrics
 | 401 | `UNAUTHORIZED` | Missing or invalid X-Api-Key / X-Api-Secret |
 | 403 | `INVALID_CREDENTIAL` | api_secret does not match expected derivation |
 | 404 | `ACCOUNT_NOT_FOUND` | Account UUID does not exist |
-| 404 | `ENTRY_NOT_FOUND` | Entry UUID does not exist |
+| 404 | `JOURNAL_ENTRY_NOT_FOUND` | Journal entry UUID does not exist |
 | 404 | `TRANSACTION_NOT_FOUND` | Transaction UUID has no entries |
 | 404 | `IDEMPOTENCY_KEY_NOT_FOUND` | Key not found or expired |
 | 404 | `CREDENTIAL_NOT_FOUND` | api_key not found or already revoked |
@@ -507,9 +499,9 @@ curl http://<host>:8080/metrics
 
 ## Plans & Deployment
 
-- **Console:** https://console.aboringledger.com
+- **Console:** https://console.entrytarget.com
 - **Plans:** Free and Standard, billed monthly at a fixed rate
 - **Deployment:** AWS only (Fargate + RDS Postgres)
   - **Managed** — vendor provisions VPC, Fargate, RDS via CloudFormation
   - **Manual** — customer downloads container image and configures their own setup
-- **Documentation:** https://a-boring-ledger.gitbook.io/docs
+- **Documentation:** https://entrytarget.gitbook.io/docs
