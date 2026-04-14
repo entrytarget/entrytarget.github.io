@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CR40M36HZ0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-CR40M36HZ0");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO fundamentals -->
+    <title>Entry Target — A financial ledger API.</title>
+    <meta
+      name="description"
+      content="A high-performance, consistent, and straightforward financial ledger API. Double-entry accounting delivered as infrastructure — reliable, auditable, and built to operate at scale."
+    />
+    <meta
+      name="keywords"
+      content="ledger, financial API, double-entry, accounting API, reliable ledger, rust, fintech infrastructure"
+    />
+    <link rel="canonical" href="https://entrytarget.com" />
+
+    <!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Entry Target — A financial ledger API." />
+    <meta
+      property="og:description"
+      content="High-performance double-entry ledger API. Consistent, auditable, and built to scale."
+    />
+    <meta property="og:url" content="https://entrytarget.com" />
+    <meta property="og:image" content="https://entrytarget.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Entry Target" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Entry Target — A financial ledger API." />
+    <meta
+      name="twitter:description"
+      content="High-performance double-entry ledger API. Consistent, auditable, and built to scale."
+    />
+    <meta name="twitter:image" content="https://entrytarget.com/og-image.png" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cstyle%3Erect{fill:%23f4f1eb}@media(prefers-color-scheme:light){rect{fill:%231a1a1a}}%3C/style%3E%3Crect x='0' y='0' width='16' height='48'/%3E%3Crect x='32' y='0' width='16' height='48'/%3E%3C/svg%3E"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Entry Target",
+        "applicationCategory": "FinanceApplication",
+        "description": "A high-performance, consistent, and straightforward financial ledger API.",
+        "url": "https://entrytarget.com",
+        "operatingSystem": "Any",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Free",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "One month free trial. Full access."
+          },
+          {
+            "@type": "Offer",
+            "name": "Entry Target",
+            "price": "250",
+            "priceCurrency": "USD",
+            "description": "Unlimited transactions. Configure your own infrastructure."
+          }
+        ],
+        "provider": {
+          "@type": "Organization",
+          "name": "Entry Target",
+          "url": "https://entrytarget.com",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "contact@entrytarget.com",
+            "contactType": "customer support"
+          }
+        }
+      }
+    </script>
+
+    <style>
+      :root {
+        --bg: #111111;
+        --fg: #e6e2dc;
+        --link: #a8b4c4;
+        --link-visited: #8e98a8;
+        --muted: #8a8a8a;
+        --border: #2a2a2a;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 3rem;
+      }
+
+      body {
+        font-family: "Outfit", system-ui, sans-serif;
+        background-color: var(--bg);
+        color: var(--fg);
+        line-height: 1.7;
+        font-size: 17px;
+        font-weight: 300;
+      }
+
+      nav {
+        position: sticky;
+        top: 0;
+        background-color: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 0.75rem 1rem;
+        z-index: 10;
+        font-size: 0.85rem;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      nav a {
+        color: var(--link);
+        text-decoration: underline;
+      }
+
+      nav a:visited {
+        color: var(--link-visited);
+      }
+
+      main {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 2rem 1rem 4rem;
+      }
+
+      a {
+        color: var(--link);
+      }
+
+      a:visited {
+        color: var(--link-visited);
+      }
+
+      section {
+        margin-bottom: 4rem;
+      }
+
+      h1 {
+        font-size: 2.4rem;
+        margin-bottom: 0.25rem;
+        letter-spacing: -0.03em;
+        font-weight: 600;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.25rem;
+        font-weight: 500;
+      }
+
+      h3 {
+        font-size: 1.05rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      .tagline {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin-bottom: 2rem;
+        font-weight: 300;
+      }
+
+      .hero {
+        margin-bottom: 3rem;
+        padding-top: 2rem;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .plan {
+        border: 1px solid var(--border);
+        padding: 1.25rem;
+      }
+
+      .plan h3 {
+        margin-top: 0;
+      }
+
+      .price {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+      }
+
+      .price-note {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      details {
+        border-bottom: 1px solid var(--border);
+        padding: 0.75rem 0;
+      }
+
+      details summary {
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      details p {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      code {
+        font-family: "Courier New", Courier, monospace;
+        background: rgba(255, 255, 255, 0.07);
+        padding: 0.15em 0.35em;
+        font-size: 0.85em;
+      }
+
+      pre {
+        background: #0a0a0a;
+        color: var(--fg);
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        border: 1px solid var(--border);
+      }
+
+      pre code {
+        background: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      footer {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      footer a {
+        color: var(--muted);
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+
+      @media (max-width: 480px) {
+        body {
+          font-size: 15px;
+        }
+        h1 {
+          font-size: 1.8rem;
+        }
+        nav ul {
+          gap: 0.3rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="#what">What</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li>
+          <a href="https://entrytarget.gitbook.io/docs/" target="_blank" rel="noopener"
+            >Docs ↗</a
+          >
+        </li>
+        <li>
+          <a href="https://console.entrytarget.com/" target="_blank" rel="noopener">Console ↗</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero" aria-label="Introduction">
+        <h1>Entry Target</h1>
+        <p class="tagline">A stateless financial ledger API. High performance. Uncompromising consistency.</p>
+        <p>
+          Financial infrastructure should not be a source of uncertainty. Entry Target is a
+          double-entry ledger delivered as an API — purpose-built for teams that require
+          correctness, auditability, and throughput. The architecture is minimal by design.
+          A proven accounting model, executed with precision.
+        </p>
+      </section>
+
+      <!-- What is it -->
+      <section id="what">
+        <h2>What is it</h2>
+        <p>
+          Entry Target is a financial ledger API. You create accounts, register financial
+          transfers between them, and retrieve balances. Credits equal debits. The books
+          close on time.
+        </p>
+        <p>
+          The architecture is conservative by design — a Rust monolith communicating
+          directly with the database. It runs on <em>your</em> AWS account. One container
+          on Fargate, one Postgres instance on RDS. Your data never leaves your
+          infrastructure.
+        </p>
+        <p>
+          The result is an API that handles millions of transactions with full consistency:
+          ACID-compliant, double-entry, immutable audit trail.
+        </p>
+      </section>
+
+      <!-- Features -->
+      <section id="features">
+        <h2>Features</h2>
+
+        <h3>Double-entry bookkeeping</h3>
+        <p>
+          Every transaction produces a debit and a credit — or a batch of them. Always balanced.
+          Always consistent. The double-entry method is the established standard for accounting,
+          and this system implements it without deviation.
+        </p>
+
+        <h3>Immutable audit trail</h3>
+        <p>
+          Once a transaction is recorded, it remains recorded. No silent modifications. No
+          unaccounted deletions. Corrections are made through compensating entries, following
+          standard accounting practice.
+        </p>
+
+        <h3>Integrity verification</h3>
+        <p>
+          Call <code>GET /integrity</code> to verify the entire database. Every row is
+          validated. If any record was altered directly in Postgres — whether by an
+          administrative error, an unauthorized script, or a misconfigured process — the
+          system detects it. Accounts with integrity violations are immediately blocked
+          from further transactions. Immutability is enforced at the application level.
+        </p>
+
+        <h3>Multi-asset support</h3>
+        <p>
+          The system tracks assets, not currencies specifically. Whether the unit of account is
+          dollars, euros, or inventory items, the ledger handles it with arbitrary precision.
+          Each journal entry declares its asset, and every account involved must match. Multiple
+          assets coexist within the same ledger without constraint.
+        </p>
+
+        <h3>No silent deduplication</h3>
+        <p>
+          Duplicate requests are not silently absorbed. If the same transaction is submitted
+          twice, the system rejects it explicitly. Deduplication is a responsibility of the
+          calling system. The ledger treats every request as intentional, ensuring that
+          integration errors are detected at the point of origin.
+        </p>
+
+        <h3>High performance</h3>
+        <p>
+          Thousands of transactions per second on modest infrastructure. The system achieves
+          this through batched writes, minimal abstraction layers, and direct database
+          communication.
+        </p>
+
+        <h3>Journal archiving</h3>
+        <p>
+          The journal grows by design. As volume increases, query performance over older
+          records will degrade. The archive endpoint allows you to select a cutoff date
+          and compact older entries into dedicated storage. Recent entries remain in the
+          active journal. You control the definition of "recent," the timing, and the
+          frequency.
+        </p>
+
+        <h3>Metrics endpoint</h3>
+        <p>
+          A <code>GET /metrics</code> endpoint is available for Prometheus to scrape.
+          Connect Grafana, configure dashboards, and establish alerts. Observability is
+          included as a standard capability of the system.
+        </p>
+
+        <h3>Catastrophic recovery</h3>
+        <p>
+          If a batch was committed and the process terminated before delivering the
+          response, the outcome is ambiguous. <code>GET /recovery</code> returns every
+          transaction from the last committed batch after a restart. This eliminates
+          orphaned transactions and the need for manual log analysis.
+        </p>
+
+        <h3>Balance by category</h3>
+        <p>
+          Query all account balances for a given asset, grouped by account category, in a
+          single call. This provides the data necessary to construct a real-time balance
+          sheet or any other consolidated view.
+        </p>
+
+        <h3>Balance policies</h3>
+        <p>
+          When posting a transaction, you specify — for each account involved — whether its
+          balance must remain positive, must remain negative, or has no restriction. Business
+          logic remains in the calling system. The ledger enforces the arithmetic constraints
+          declared in each request.
+        </p>
+
+        <h3>Simple API</h3>
+        <p>
+          REST. JSON. Four primary endpoints. The API surface is minimal, and the
+          documentation reflects that.
+        </p>
+        <p>Creating a transaction:</p>
+        <pre><code>POST /v1/transactions
+{
+  "entries": [
+    {
+      "sequence": 1,
+      "type": "SOME_PAYMENT_METHOD",
+      "asset": "USD",
+      "amount": 500,
+      "debit": {
+        "account_id": "debit-account-uuid",
+        "balance_policy": "ALWAYS_POSITIVE"
+      },
+      "credit": {
+        "account_id": "credit-account-uuid",
+        "balance_policy": "NONE"
+      }
+    }
+  ]
+}</code></pre>
+        <p>A complete request requires only the fields shown above.</p>
+      </section>
+
+      <!-- Pricing -->
+      <section id="pricing">
+        <h2>Pricing</h2>
+        <p>
+          No tiers. No per-transaction fees. One plan. One price. You configure the
+          infrastructure on your own AWS account. A free trial period is available.
+        </p>
+        <div class="pricing-grid">
+          <div class="plan">
+            <h3>Free</h3>
+            <div class="price">$0</div>
+            <p class="price-note">for one month, no obligations</p>
+            <p>
+              Full access. No limits. No credit card required. Evaluate the system
+              thoroughly before making a decision.
+            </p>
+          </div>
+          <div class="plan">
+            <h3>Entry Target</h3>
+            <div class="price">$250</div>
+            <p class="price-note">per month</p>
+            <p>
+              Unlimited transactions. Unlimited accounts. Unlimited assets. You select your
+              Fargate configuration, your RDS instance, and your read replicas. The
+              infrastructure scales according to your requirements.
+            </p>
+          </div>
+        </div>
+        <p>
+          <a href="https://console.entrytarget.com/" target="_blank" rel="noopener">Start</a>
+        </p>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <h2>FAQ</h2>
+
+        <details>
+          <summary>What technology is used?</summary>
+          <p>
+            The system is written in Rust, a language designed for correctness, memory safety,
+            and performance. The database is PostgreSQL — a mature, battle-tested relational
+            database. Communication is over standard HTTP.
+          </p>
+          <p>
+            For a system where accounting precision is non-negotiable, a language that enforces
+            correctness at the compiler level is a natural choice.
+          </p>
+        </details>
+
+        <details>
+          <summary>Is AWS required?</summary>
+          <p>
+            At present, yes. The system runs on AWS Fargate and RDS Postgres. Support for
+            additional cloud providers is on the roadmap.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can this be used for digital assets or alternative currencies?</summary>
+          <p>
+            The system tracks any financial transaction regardless of the asset type. It
+            ensures the numbers balance correctly. The classification of what is being
+            accounted for is determined by the calling system.
+          </p>
+        </details>
+
+        <details>
+          <summary>What throughput can be expected?</summary>
+          <p>
+            With all entries operating on the same balance: 21,000 transactions per second
+            on a local machine. 3,000 TPS on the smallest available Fargate and RDS
+            instances. Higher throughput is achievable with larger infrastructure
+            configurations. For workloads exceeding 3,000 TPS, we recommend contacting
+            our team to discuss the appropriate setup.
+          </p>
+        </details>
+
+        <details>
+          <summary>How is support provided?</summary>
+          <p>
+            Contact us at
+            <a href="mailto:support@entrytarget.com">support@entrytarget.com</a>. Every
+            inquiry is reviewed and responded to directly by the engineering team.
+          </p>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <strong>Entry Target</strong>
+      </p>
+      <p>
+        <a href="mailto:contact@entrytarget.com">contact@entrytarget.com</a> ·
+        <a href="https://entrytarget.gitbook.io/docs/" target="_blank" rel="noopener">Docs</a>
+        ·
+        <a href="https://console.entrytarget.com" target="_blank" rel="noopener">Console</a> ·
+        <a href="https://www.linkedin.com/company/entrytarget" target="_blank" rel="noopener"
+          >LinkedIn</a
+        >
+        ·
+        <a href="/llms.txt">LLMs.txt</a>
+      </p>
+    </footer>
+  </body>
+</html>
