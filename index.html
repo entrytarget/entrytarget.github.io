@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO fundamentals -->
-    <title>Entry Target — A financial ledger API.</title>
+    <title>EntryTarget — A financial ledger API.</title>
     <meta
       name="description"
       content="A high-performance, consistent, and straightforward financial ledger API. Double-entry accounting delivered as infrastructure — reliable, auditable, and built to operate at scale."
@@ -29,7 +29,7 @@
 
     <!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Entry Target — A financial ledger API." />
+    <meta property="og:title" content="EntryTarget — A financial ledger API." />
     <meta
       property="og:description"
       content="High-performance double-entry ledger API. Consistent, auditable, and built to scale."
@@ -38,11 +38,11 @@
     <meta property="og:image" content="https://entrytarget.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="Entry Target" />
+    <meta property="og:site_name" content="EntryTarget" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Entry Target — A financial ledger API." />
+    <meta name="twitter:title" content="EntryTarget — A financial ledger API." />
     <meta
       name="twitter:description"
       content="High-performance double-entry ledger API. Consistent, auditable, and built to scale."
@@ -69,7 +69,7 @@
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Entry Target",
+        "name": "EntryTarget",
         "applicationCategory": "FinanceApplication",
         "description": "A high-performance, consistent, and straightforward financial ledger API.",
         "url": "https://entrytarget.com",
@@ -84,7 +84,7 @@
           },
           {
             "@type": "Offer",
-            "name": "Entry Target",
+            "name": "EntryTarget",
             "price": "250",
             "priceCurrency": "USD",
             "description": "Unlimited transactions. Configure your own infrastructure."
@@ -92,7 +92,7 @@
         ],
         "provider": {
           "@type": "Organization",
-          "name": "Entry Target",
+          "name": "EntryTarget",
           "url": "https://entrytarget.com",
           "contactPoint": {
             "@type": "ContactPoint",
@@ -323,9 +323,7 @@
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li>
-          <a href="https://entrytarget.gitbook.io/docs/" target="_blank" rel="noopener"
-            >Docs ↗</a
-          >
+          <a href="https://entrytarget.gitbook.io/docs/" target="_blank" rel="noopener">Docs ↗</a>
         </li>
         <li>
           <a href="https://console.entrytarget.com/" target="_blank" rel="noopener">Console ↗</a>
@@ -336,13 +334,15 @@
     <main>
       <!-- Hero -->
       <section class="hero" aria-label="Introduction">
-        <h1>Entry Target</h1>
-        <p class="tagline">A stateless financial ledger API. High performance. Uncompromising consistency.</p>
+        <h1>EntryTarget</h1>
+        <p class="tagline">
+          A stateless financial ledger API. High performance. Uncompromising consistency.
+        </p>
         <p>
-          Financial infrastructure should not be a source of uncertainty. Entry Target is a
+          Financial infrastructure should not be a source of uncertainty. EntryTarget is a
           double-entry ledger delivered as an API — purpose-built for teams that require
-          correctness, auditability, and throughput. The architecture is minimal by design.
-          A proven accounting model, executed with precision.
+          correctness, auditability, and throughput. The architecture is minimal by design. A proven
+          accounting model, executed with precision.
         </p>
       </section>
 
@@ -350,15 +350,13 @@
       <section id="what">
         <h2>What is it</h2>
         <p>
-          Entry Target is a financial ledger API. You create accounts, register financial
-          transfers between them, and retrieve balances. Credits equal debits. The books
-          close on time.
+          EntryTarget is a financial ledger API. You create accounts, register financial transfers
+          between them, and retrieve balances. Credits equal debits. The books close on time.
         </p>
         <p>
-          The architecture is conservative by design — a Rust monolith communicating
-          directly with the database. It runs on <em>your</em> AWS account. One container
-          on Fargate, one Postgres instance on RDS. Your data never leaves your
-          infrastructure.
+          The architecture is conservative by design — a Rust monolith communicating directly with
+          the database. It runs on <em>your</em> AWS account. One container on Fargate, one Postgres
+          instance on RDS. Your data never leaves your infrastructure.
         </p>
         <p>
           The result is an API that handles millions of transactions with full consistency:
@@ -373,8 +371,8 @@
         <h3>Double-entry bookkeeping</h3>
         <p>
           Every transaction produces a debit and a credit — or a batch of them. Always balanced.
-          Always consistent. The double-entry method is the established standard for accounting,
-          and this system implements it without deviation.
+          Always consistent. The double-entry method is the established standard for accounting, and
+          this system implements it without deviation.
         </p>
 
         <h3>Immutable audit trail</h3>
@@ -386,79 +384,77 @@
 
         <h3>Integrity verification</h3>
         <p>
-          Call <code>GET /integrity</code> to verify the entire database. Every row is
-          validated. If any record was altered directly in Postgres — whether by an
-          administrative error, an unauthorized script, or a misconfigured process — the
-          system detects it. Accounts with integrity violations are immediately blocked
-          from further transactions. Immutability is enforced at the application level.
+          Call <code>GET /integrity</code> to verify the entire database. Every row is validated. If
+          any record was altered directly in Postgres — whether by an administrative error, an
+          unauthorized script, or a misconfigured process — the system detects it. Accounts with
+          integrity violations are immediately blocked from further transactions. Immutability is
+          enforced at the application level.
         </p>
 
         <h3>Multi-asset support</h3>
         <p>
           The system tracks assets, not currencies specifically. Whether the unit of account is
-          dollars, euros, or inventory items, the ledger handles it with arbitrary precision.
-          Each journal entry declares its asset, and every account involved must match. Multiple
-          assets coexist within the same ledger without constraint.
+          dollars, euros, or inventory items, the ledger handles it with arbitrary precision. Each
+          journal entry declares its asset, and every account involved must match. Multiple assets
+          coexist within the same ledger without constraint.
         </p>
 
         <h3>No silent deduplication</h3>
         <p>
-          Duplicate requests are not silently absorbed. If the same transaction is submitted
-          twice, the system rejects it explicitly. Deduplication is a responsibility of the
-          calling system. The ledger treats every request as intentional, ensuring that
-          integration errors are detected at the point of origin.
+          Duplicate requests are not silently absorbed. If the same transaction is submitted twice,
+          the system rejects it explicitly. Deduplication is a responsibility of the calling system.
+          The ledger treats every request as intentional, ensuring that integration errors are
+          detected at the point of origin.
         </p>
 
         <h3>High performance</h3>
         <p>
-          Thousands of transactions per second on modest infrastructure. The system achieves
-          this through batched writes, minimal abstraction layers, and direct database
-          communication.
+          Thousands of transactions per second on modest infrastructure. The system achieves this
+          through batched writes, minimal abstraction layers, and direct database communication.
         </p>
 
         <h3>Journal archiving</h3>
         <p>
-          The journal grows by design. As volume increases, query performance over older
-          records will degrade. The archive endpoint allows you to select a cutoff date
-          and compact older entries into dedicated storage. Recent entries remain in the
-          active journal. You control the definition of "recent," the timing, and the
-          frequency.
+          The journal grows by design. As volume increases, query performance over older records
+          will degrade. The archive endpoint allows you to select a cutoff date and compact older
+          entries into dedicated storage. Recent entries remain in the active journal. You control
+          the definition of "recent," the timing, and the frequency.
         </p>
 
         <h3>Metrics endpoint</h3>
         <p>
-          A <code>GET /metrics</code> endpoint is available for Prometheus to scrape.
-          Connect Grafana, configure dashboards, and establish alerts. Observability is
-          included as a standard capability of the system.
+          A <code>GET /metrics</code> endpoint is available for Prometheus to scrape. Connect
+          Grafana, configure dashboards, and establish alerts. Observability is included as a
+          standard capability of the system.
         </p>
 
         <h3>Catastrophic recovery</h3>
         <p>
-          If a batch was committed and the process terminated before delivering the
-          response, the outcome is ambiguous. <code>GET /recovery</code> returns every
-          transaction from the last committed batch after a restart. This eliminates
-          orphaned transactions and the need for manual log analysis.
+          If a batch was committed and the process terminated before delivering the response, the
+          outcome is ambiguous. <code>GET /recovery</code> returns every transaction from the last
+          committed batch after a restart. This eliminates orphaned transactions and the need for
+          manual log analysis.
         </p>
 
         <h3>Balance by category</h3>
         <p>
-          Query all account balances for a given asset, grouped by account category, in a
-          single call. This provides the data necessary to construct a real-time balance
-          sheet or any other consolidated view.
+          Query all account balances for a given asset, grouped by account category, in a single
+          call. This provides the data necessary to construct a real-time balance sheet or any other
+          consolidated view.
         </p>
 
         <h3>Balance policies</h3>
         <p>
-          When posting a transaction, you specify — for each account involved — whether its
-          balance must remain positive, must remain negative, or has no restriction. Business
-          logic remains in the calling system. The ledger enforces the arithmetic constraints
-          declared in each request.
+          When posting a transaction, you specify — for each account involved — whether its balance
+          must remain positive, must remain negative, or has no restriction. Business logic remains
+          in the calling system. The ledger enforces the arithmetic constraints declared in each
+          request.
         </p>
 
         <h3>Simple API</h3>
         <p>
-          REST. JSON. Four primary endpoints. The API surface is minimal, and the
-          documentation reflects that.
+          REST. JSON. Four primary endpoints. The API surface is minimal, and the documentation
+          reflects that.
         </p>
         <p>Creating a transaction:</p>
         <pre><code>POST /v1/transactions
@@ -487,8 +483,8 @@
       <section id="pricing">
         <h2>Pricing</h2>
         <p>
-          No tiers. No per-transaction fees. One plan. One price. You configure the
-          infrastructure on your own AWS account. A free trial period is available.
+          No tiers. No per-transaction fees. One plan. One price. You configure the infrastructure
+          on your own AWS account. A free trial period is available.
         </p>
         <div class="pricing-grid">
           <div class="plan">
@@ -496,18 +492,18 @@
             <div class="price">$0</div>
             <p class="price-note">for one month, no obligations</p>
             <p>
-              Full access. No limits. No credit card required. Evaluate the system
-              thoroughly before making a decision.
+              Full access. No limits. No credit card required. Evaluate the system thoroughly before
+              making a decision.
             </p>
           </div>
           <div class="plan">
-            <h3>Entry Target</h3>
+            <h3>EntryTarget</h3>
             <div class="price">$250</div>
             <p class="price-note">per month</p>
             <p>
-              Unlimited transactions. Unlimited accounts. Unlimited assets. You select your
-              Fargate configuration, your RDS instance, and your read replicas. The
-              infrastructure scales according to your requirements.
+              Unlimited transactions. Unlimited accounts. Unlimited assets. You select your Fargate
+              configuration, your RDS instance, and your read replicas. The infrastructure scales
+              according to your requirements.
             </p>
           </div>
         </div>
@@ -523,9 +519,9 @@
         <details>
           <summary>What technology is used?</summary>
           <p>
-            The system is written in Rust, a language designed for correctness, memory safety,
-            and performance. The database is PostgreSQL — a mature, battle-tested relational
-            database. Communication is over standard HTTP.
+            The system is written in Rust, a language designed for correctness, memory safety, and
+            performance. The database is PostgreSQL — a mature, battle-tested relational database.
+            Communication is over standard HTTP.
           </p>
           <p>
             For a system where accounting precision is non-negotiable, a language that enforces
@@ -536,28 +532,27 @@
         <details>
           <summary>Is AWS required?</summary>
           <p>
-            At present, yes. The system runs on AWS Fargate and RDS Postgres. Support for
-            additional cloud providers is on the roadmap.
+            At present, yes. The system runs on AWS Fargate and RDS Postgres. Support for additional
+            cloud providers is on the roadmap.
           </p>
         </details>
 
         <details>
           <summary>Can this be used for digital assets or alternative currencies?</summary>
           <p>
-            The system tracks any financial transaction regardless of the asset type. It
-            ensures the numbers balance correctly. The classification of what is being
-            accounted for is determined by the calling system.
+            The system tracks any financial transaction regardless of the asset type. It ensures the
+            numbers balance correctly. The classification of what is being accounted for is
+            determined by the calling system.
           </p>
         </details>
 
         <details>
           <summary>What throughput can be expected?</summary>
           <p>
-            With all entries operating on the same balance: 21,000 transactions per second
-            on a local machine. 3,000 TPS on the smallest available Fargate and RDS
-            instances. Higher throughput is achievable with larger infrastructure
-            configurations. For workloads exceeding 3,000 TPS, we recommend contacting
-            our team to discuss the appropriate setup.
+            With all entries operating on the same balance: 21,000 transactions per second on a
+            local machine. 3,000 TPS on the smallest available Fargate and RDS instances. Higher
+            throughput is achievable with larger infrastructure configurations. For workloads
+            exceeding 3,000 TPS, we recommend contacting our team to discuss the appropriate setup.
           </p>
         </details>
 
@@ -565,8 +560,8 @@
           <summary>How is support provided?</summary>
           <p>
             Contact us at
-            <a href="mailto:support@entrytarget.com">support@entrytarget.com</a>. Every
-            inquiry is reviewed and responded to directly by the engineering team.
+            <a href="mailto:support@entrytarget.com">support@entrytarget.com</a>. Every inquiry is
+            reviewed and responded to directly by the engineering team.
           </p>
         </details>
       </section>
@@ -574,7 +569,7 @@
 
     <footer>
       <p>
-        <strong>Entry Target</strong>
+        <strong>EntryTarget</strong>
       </p>
       <p>
         <a href="mailto:contact@entrytarget.com">contact@entrytarget.com</a> ·
